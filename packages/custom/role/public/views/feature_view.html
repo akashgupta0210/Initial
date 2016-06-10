@@ -1,0 +1,48 @@
+<section data-ng-controller="FeatureController"	data-ng-init="findOne();">
+	<!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
+	<div class="col-md-12 row">
+        <div class="pull-right">
+            <a class="btn btn-info" ng-click="editFeature(feature._id)">Edit</a>
+            <a class="btn btn-info" ng-click="destroy(feature)">Delete</a>
+        </div>
+	</div>
+	<div class="col-md-12 row">
+		<form class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label class="col-md-2">Name</label>
+				<div class="col-md-10">{{feature.name}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Url</label>
+				<div class="col-md-10">{{feature.url}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Description</label>
+				<div class="col-md-10">{{feature.description | limitTo: 20}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Image</label>
+				<div class="col-md-10">{{feature.image}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Is Component</label>
+				<div class="col-md-10">
+					<span  ng-if = "feature.isComponent" class="glyphicon glyphicon-ok"></span>
+					<span  ng-if = "!feature.isComponent" class="glyphicon glyphicon-remove"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Is Menu Item</label>
+				<div class="col-md-10">
+					<span  ng-if = "feature.ismenuItem" class="glyphicon glyphicon-ok"></span>
+					<span  ng-if = "!feature.ismenuItem" class="glyphicon glyphicon-remove"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<button type="button" class="btn btn-info" ng-click="cancel()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

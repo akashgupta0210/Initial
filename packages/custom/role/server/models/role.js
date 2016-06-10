@@ -1,5 +1,5 @@
 'use strict';
-// require('custom/role/server/models/feature.js');
+
 /**
  * Module dependencies.
  */

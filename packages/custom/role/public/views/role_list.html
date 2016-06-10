@@ -1,0 +1,48 @@
+<section data-ng-controller="RoleController" data-ng-init="findAll();">
+    <!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
+    <!-- <div data-ng-include="'/system/views/alert.html'"></div> -->
+    <div class="col-md-12 row">
+        <h3 class="pull-left">Role</h3>
+        <button class="btn btn-info pull-right" data-ng-click="newRole()">Create New</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Name</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="anchorTag">
+            <tr data-ng-repeat="role in roles" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="roles">
+                <td>{{role.name}}</a></td>
+                <td>{{role.description | limitTo: 20}}...</td>
+                <!-- <td ><span ng-repeat = "feature in role.features">{{feature.feature.name}}<span ng-hide = "$last">,&nbsp;</span></span></td> -->
+                <td width="10%" align="center">
+                    <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-arrow-circle-right"></i><span>Actions</span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li>
+                                <a class="menu-toggler" data-ng-click="editRole(role._id)">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                    <span>Edit Role</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="menu-toggler" data-ng-click="destroy(role)">
+                                    <i class="fa fa-minus-circle"></i>
+                                    <span>Delete Role</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr data-ng-show="!roles && !roles.length">
+                <td colspan="4">No roles available</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

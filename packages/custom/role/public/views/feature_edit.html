@@ -1,0 +1,74 @@
+<section data-ng-controller="FeatureController" data-ng-init="findOne()">
+    <!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
+    <div class="col-md-12">
+        <form name="featureForm" class="form-horizontal" data-ng-submit="update(featureForm.$valid)" novalidate>
+            <div class="form-group">
+                <label mean-token="'edit-feature_name'" class="col-md-2 pull-left">Name</label>
+                <div class="col-md-6">
+                    <input name="name" type="text" class="form-control" data-ng-model="feature.name" id="name" placeholder="Name" required>
+                    <div ng-show="submitted && featureForm.name.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.name.$error.required">Please enter name!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-feature_url'" class="col-md-2 pull-left">Url</label>
+                <div class="col-md-6">
+                    <input name="feature_url" type="text" class="form-control" data-ng-model="feature.url" id="url" pattern="/.+" placeholder="Url" required>
+                    <div ng-show="submitted && featureForm.feature_url.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.feature_url.$error.required">Please enter url!</span>
+                    </div>
+                    <div ng-show="submitted && featureForm.feature_url.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.feature_url.$error.pattern">Invalid url!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-description'" class="col-md-2 pull-left">Description</label>
+                <div class="col-md-6">
+                    <textarea name="description" type="text" class="form-control" data-ng-model="feature.description" id="description" placeholder="Description" cols="30" rows="5" required></textarea>
+                    <div ng-show="submitted && featureForm.description.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.description.$error.required">Please enter description!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-color'" class="col-md-2 pull-left">Image</label>
+                <div class="col-md-6">
+                    <input name="color" type="text" class="form-control" data-ng-model="feature.image" id="description" placeholder="Image" required>
+                    <div ng-show="submitted && featureForm.color.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.color.$error.required">Please upload image!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-isComponent'" class="col-md-2 pull-left">Is Component</label>
+                <div class="col-md-6">
+                    <input name="feature_isComponent" type="checkbox" class="" ng-checked="feature.isComponent" data-ng-model="feature.isComponent" id="isComponent">
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-ismenuItem'" class="col-md-2 pull-left">Is Menu Item</label>
+                <div class="col-md-6">
+                    <input name="feature_ismenuItem" type="checkbox" class="" ng-checked="feature.ismenuItem" data-ng-model="feature.ismenuItem" id="ismenuItem">
+                </div>
+            </div>
+            <!-- <div class="form-group" ng-class="{ 'has-error' : submitted && featureForm.featureCategory.$invalid }">
+                <label for="" mean-token="'create-featureCategory'"
+                       class="col-md-2 err-msg-qualifySkills">{{ 'roles.feature.FEATURE_CATEGORY' | translate }}</label>
+                <div class="col-md-6">
+                    <select name="featureCategory" data-ng-model="feature.featureCategory" class="form-control" >
+                        <option value="" >{{ 'roles.feature.SELECT' | translate }}</option>
+                        <option data-ng-repeat="category in categories" value="{{category._id}}" >{{category.name}}</option>
+                    </select>
+                </div>
+            </div> -->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                     <button mean-token="'edit-submit'" type="submit" class="btn btn-info">Submit</button>
+                    <button type="button" class="btn btn-info" ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

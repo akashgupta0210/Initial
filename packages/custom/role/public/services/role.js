@@ -1,7 +1,9 @@
 (function() {
     'use strict';
+    angular.module('mean.role').factory('RoleService', RoleService);
+    RoleService.$inject = ['$http', '$q','$resource'];
 
-    function Role($http, $q) {
+    function RoleService($http, $q, $resource) {
         return {
             name: 'role',
             checkCircle: function(circle) {
@@ -13,15 +15,15 @@
                     deferred.reject(response);
                 });
                 return deferred.promise;
-
-            }
+            },
+            createRole: $resource('/api/role', {}, {
+                update: {method: 'PUT'},
+                query: {method: 'GET', isArray: true}
+            }),
+            role: $resource('/api/role/:roleId', {roleId: '@_id'}, {
+                update: {method: 'PUT'},
+                query: {method: 'GET', isArray: true}
+            })
         };
     }
-
-    angular
-        .module('mean.role')
-        .factory('Role', Role);
-
-    Role.$inject = ['$http', '$q'];
-
 })();

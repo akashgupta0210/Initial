@@ -109,6 +109,7 @@ module.exports = function (RoleCtrl) {
         //     var features = req.body.features;
         //     delete req.body.features;
             var role = req.role;
+            role = _.extend(role, req.body);
             req.assert('name', 'Please enter  Name').notEmpty();
             req.assert('description', 'You must enter description').notEmpty();
         //     var role = _.extend(role, req.body);
@@ -219,4 +220,3 @@ module.exports = function (RoleCtrl) {
         
     };
 }
-
