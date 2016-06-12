@@ -21,14 +21,14 @@
 	module.exports = function (FeatureCategoryCtrl, app, auth, database) {
 		// var requiresAdmin = circles.controller.hasCircle('admin');
 	    // var requiresLogin = circles.controller.hasCircle('authenticated');
-	    var featureCategoryCtrl = require('../controllers/featurecategory')(FeatureCategoryCtrl);
+	    var featureCategoryCtrl = require('../controllers/featureCategory')(FeatureCategoryCtrl);
 	    app.route('/api/featureCategory')
-	        .post(auth.requiresLogin, hasAuthorization, featureCategoryCtrl.create)
-	        .get(auth.requiresLogin, hasAuthorization, featureCategoryCtrl.all);
+	        .post(featureCategoryCtrl.create)
+	        .get(featureCategoryCtrl.all);
 	    app.route('/api/featureCategory/:featureCategoryId')
-	        .get(auth.requiresLogin, hasAuthorization, featureCategoryCtrl.show)
-	        .put(auth.requiresLogin, hasAuthorization, featureCategoryCtrl.update)
-	        .delete(auth.requiresLogin, hasAuthorization, featureCategoryCtrl.destroy);
+	        .get(featureCategoryCtrl.show)
+	        .put(featureCategoryCtrl.update)
+	        .delete(featureCategoryCtrl.destroy);
 	    app.param('featureCategoryId', featureCategoryCtrl.featureCategory);
 	};
 })();

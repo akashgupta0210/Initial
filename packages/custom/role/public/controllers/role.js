@@ -2,8 +2,8 @@
     'use strict';
     /* jshint -W098 */
     angular.module('mean.role').controller('RoleController', RoleController);
-    RoleController.$inject = ['$scope', 'Global', '$stateParams','ROLE', '$location', 'RoleService'];
-    function RoleController($scope, Global, $stateParams, ROLE, $location, RoleService) {
+    RoleController.$inject = ['$scope', 'Global', '$stateParams','ROLE', '$location', 'RoleService','FeatureService'];
+    function RoleController($scope, Global, $stateParams, ROLE, $location, RoleService,FeatureService) {
         $scope.global = Global;
         $scope.package = {
             name: 'role',
@@ -102,6 +102,12 @@
                 $scope.role = role;
             });
         };
+
+        $scope.listAllFeature = function(){
+            FeatureService.createFeature.query(function(features){
+                $scope.features = features;
+            })
+        }
 
 
         //Edited

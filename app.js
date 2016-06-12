@@ -14,6 +14,7 @@ import 'angular-sanitize';
 import 'angular-ui-router';
 import 'angular-jwt';
 import 'angular-bootstrap/ui-bootstrap-tpls';
+import 'ng-file-upload';
 
 window.$ = jQuery;
 
@@ -27,7 +28,7 @@ angular.element(document).ready(function () {
 });
 
 function processModules(modules) {
-    var packageModules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'ui.select', 'ngSanitize'], m, mn;
+    var packageModules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'ui.select', 'ngSanitize','ngFileUpload'], m, mn;
     for (var index in modules) {
         m = modules[index];
         mn = 'mean.' + m.name;

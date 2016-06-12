@@ -1,43 +1,31 @@
-<section data-ng-controller="FeatureCategoryController" data-ng-init="detailFeatureCategory();">
-    <div ng-include="'/system/views/breadcrum.html'"></div>
-    <div class="mainwrapper social-group-header">
+<section data-ng-controller="FeatureCategoryController" data-ng-init="findOne();">
+    <!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
+    <div class="col-md-12 row">
         <div class="pull-right">
-            <a class="btn btn-info"
-               href="/admin/featurecategory/{{featureCategory._id}}/edit">{{ 'common.EDIT' | translate }} </a> <a
-                href="" class="btn btn-info"
-                ng-click="modalDeletePopup(featureCategory)">{{ 'common.DELETE' | translate }}</a>
+            <a class="btn btn-info">Edit</a>
+            <a class="btn btn-info" ng-click="destroy(featureCategory)">Delete</a>
         </div>
     </div>
 
-    <div class="mainwrapper">
-        <form name="featureCategoryForm"
-              class="form-horizontal leftAlign formAlign" novalidate>
+    <div class="col-md-12 row">
+        <form name="featureCategoryForm" class="form-horizontal" novalidate>
             <div class="form-group">
-                <label mean-token="'show-name'" class="col-md-2">{{ 'common.NAME' | translate }}</label>
-
-                <div class="col-md-10 viewRole">{{featureCategory.name}}</div>
+                <label mean-token="'show-name'" class="col-md-2">Name</label>
+                <div class="col-md-10">{{featureCategory.name}}</div>
             </div>
             <div class="form-group">
-                <label mean-token="'show-icon'" class="col-md-2">{{ 'roles.feature.ICON '| translate }}</label>
-
-                <div class="col-md-10 viewRole">{{featureCategory.icon}}</div>
+                <label mean-token="'show-icon'" class="col-md-2">Image</label>
+                <div class="col-md-10 viewRole">{{featureCategory.image}}</div>
             </div>
             <div class="form-group">
-                <label mean-token="'show-description'" class="col-md-2">{{ 'common.DESCRIPTION' | translate }}</label>
-
-                <div class="col-md-10 viewRole">
-                    {{featureCategory.description}}
-                </div>
+                <label mean-token="'show-description'" class="col-md-2">Description</label>
+                <div class="col-md-10">{{featureCategory.description}}</div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="button" class="btn btn-info"
-                            ng-click="cancelFeatureCategory()">{{ 'offsidebar.chat.BACK' | translate }}
-                    </button>
+                    <button type="button" class="btn btn-info" ng-click="cancelFeatureCategory()">Back</button>
                 </div>
             </div>
         </form>
     </div>
 </section>
-
-

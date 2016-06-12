@@ -45,10 +45,10 @@ module.exports = function (RoleCtrl) {
             var role = new RoleModel(req.body);
             req.assert('name', 'Please enter  Name').notEmpty();
             req.assert('description', 'You must enter description').notEmpty();
-            // var errors = req.validationErrors();
-            // if (errors) {
-                // return res.status(400).send(errors);
-            // }
+            var errors = req.validationErrors();
+            if (errors) {
+                return res.status(400).send(errors);
+            }
             // var roleFeatures=[];
             // for(var i=0;i<features.length;i++ ){
                 // roleFeatures.push(features[i].feature);

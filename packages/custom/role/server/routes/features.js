@@ -30,6 +30,10 @@ module.exports = function (FeatureCtrl, app, auth, database) {
         .post(featurectrl.create)
         .get(featurectrl.all);
 
+    //Image upload api
+    app.route('/api/upload/image')
+        .post(featurectrl.postImage);
+
     app.route('/api/feature/:featureId')
         .get(featurectrl.show)
         .put(featurectrl.update)

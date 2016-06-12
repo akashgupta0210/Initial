@@ -32,11 +32,11 @@ var RoleSchema = new Schema({
     updatedAt: {
         type: Date,
         default: Date.now
-    // },
-    // features: {
-    //     type: [
-    //         {type: Schema.ObjectId, ref: 'Feature'}
-    //     ]
+    },
+    features: {
+        type: [
+            {type: Schema.ObjectId, ref: 'Feature'}
+        ]
     }
 });
 

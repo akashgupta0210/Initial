@@ -39,10 +39,14 @@
             <div class="form-group">
                 <label mean-token="'create-image'" class="col-md-2 pull-left">Image</label>
                 <div class="col-md-6">
-                    <textarea name="icon"  class="form-control input-sm" data-ng-model="feature.image" id="color" placeholder="Image" required></textarea>
-                    <div ng-show="submitted && featureForm.color.$invalid">
-                        <span class="err-msg errorText errorRed" ng-show="featureForm.color.$error.required">Please upload image!</span>
-                    </div>
+                    <div class="btn btn-info" ngf-select ngf-change="featureImage($files)" accept="image/png, image/jpeg">Upload</div>
+                        <span data-ng-if="uploadInProgress">Upload progress: {{ uploadProgress }}</span>
+                        <img class="img-responsive" data-ng-src="{{feature.image}}" data-ng-if="feature.image">
+                        <!-- <img src="/admin/assets/img/feature/28ab2928-442b-4f9e-871e-115932924fda.jpg"> -->
+                    <!-- <textarea name="image"  class="form-control input-sm" data-ng-model="feature.image" id="color" placeholder="Image" required></textarea> -->
+                    <!-- <div ng-show="submitted && featureForm.image.$invalid">
+                        <span class="err-msg errorText errorRed" ng-show="featureForm.image.$error.required">Please upload image!</span>
+                    </div> -->
                 </div>
             </div>
             <div class="form-group">

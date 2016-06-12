@@ -11,7 +11,11 @@
 
 var mongoose = require('mongoose'),
     FeatureModel = mongoose.model('Feature'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    uuid = require('node-uuid'),
+    multiparty = require('multiparty'),
+    fs = require('fs'),
+    mkdirp = require('mkdirp');
 
 module.exports = function (FeatureCtrl) {
 
@@ -154,6 +158,46 @@ module.exports = function (FeatureCtrl) {
                     });
                 }
                 res.json(features);
+            });
+        },
+
+        /**Image Upload
+          *
+          */
+        postImage: function(req, res) {
+            var form = new multiparty.Form();
+            form.parse(req, function(err, fields, files) {
+                var file = files.file[0];
+                var contentType = file.headers['content-type'];
+                var tmpPath = file.path;
+                var extIndex = tmpPath.lastIndexOf('.');
+                var extension = (extIndex < 0) ? '' : tmpPath.substr(extIndex);
+                // uuid is for generating unique filenames. 
+                var fileName = uuid.v4() + extension;
+                mkdirp('packages/custom/Initial/public/assets/img/feature', function (err) {
+                    if (err) console.error(err)
+                });
+                var destPath = '/packages/custom/Initial/public/assets/img/feature/' + fileName;
+
+                // Server side file type checker.
+                if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
+                    fs.unlink(tmpPath);
+                    return res.status(400).send('Unsupported file type.');
+                }
+
+                var is = fs.createReadStream(tmpPath);
+                var os = fs.createWriteStream(destPath);
+
+                if(is.pipe(os)) {
+                    fs.unlink(tmpPath, function (err) { //To unlink the file from temp path after copy
+                        if (err) {
+                            return console.error(err);
+                        }
+                    });
+                    return res.json(destPath);
+                } else {
+                    return res.json('File not uploaded');
+                }
             });
         },
     };
