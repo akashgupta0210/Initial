@@ -1,0 +1,32 @@
+{
+  "name": "meanio-users",
+  "version": "0.1.4",
+  "description": "Users package",
+  "author": {
+    "name": "Linnovate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rjVapes/meanio-users.git"
+  },
+  "mean": "0.6.x",
+  "engines": {
+    "node": "4.2.x",
+    "npm": "3.x"
+  },
+  "scripts": {
+    "postinstall" : "bower install"
+  },
+  "dependencies": {
+    "passport-facebook": "latest",
+    "passport-github": "latest",
+    "passport-google-oauth": "latest",
+    "passport-linkedin": "latest",
+    "passport-local": "latest",
+    "passport-twitter": "latest",
+    "nodemailer": "latest",
+    "meanio-circles": "^0.1.x",
+    "angular-jwt" : "latest"
+  },
+  "license": "MIT"
+}
