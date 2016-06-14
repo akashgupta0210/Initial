@@ -174,17 +174,19 @@ module.exports = function (FeatureCtrl) {
                 var extension = (extIndex < 0) ? '' : tmpPath.substr(extIndex);
                 // uuid is for generating unique filenames. 
                 var fileName = uuid.v4() + extension;
-                mkdirp('packages/custom/Initial/public/assets/img/feature', function (err) {
+                mkdirp('packages/contrib/meanio-system/public/assets/img/feature', function (err) {
                     if (err) console.error(err)
                 });
-                var destPath = __dirname + '../../../../../../packages/custom/Initial/public/assets/img/feature/' + fileName;
+                // var destPath = __dirname + '../../../../../meanStarter/assets/img/feature' + fileName;
+                var destPath = __dirname + '../../../../../contrib/meanio-system/public/assets/img/feature/' + fileName;
+                var destPathResponse = '/system/assets/img/feature/' + fileName;
 
                 // Server side file type checker.
                 if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
                     fs.unlink(tmpPath);
                     return res.status(400).send('Unsupported file type.');
                 }
-                console.log(destPath);
+                // console.log(destPath);
                 var is = fs.createReadStream(tmpPath);
                 var os = fs.createWriteStream(destPath);
 
@@ -194,19 +196,10 @@ module.exports = function (FeatureCtrl) {
                             return console.error(err);
                         }
                     });
-                    return res.json(destPath);
+                    return res.json(destPathResponse);
                 } else {
                     return res.json('File not uploaded');
                 }
-
-                // fs.writeFile(destPath, file, function (err) {
-                //     if (err){
-                //         return console.error(err);
-                //     } else {
-                //         return res.json(destPath);
-                //     }
-                // });
-
             });
         },
     };
