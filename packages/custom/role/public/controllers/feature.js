@@ -8,6 +8,7 @@
 	        name: 'role',
 	        feature: 'Features'
 	    };
+	    $scope.isFeatureCategory = true;
 	//     initializePermission($scope, $rootScope, $location, flash, $scope.package.featureName, URLFactory.MESSAGES);
 	//     initializeBreadCrum($scope, $scope.package.modelName, URLFactory.ROLE.PATH.LIST_FEATURE);
 	//     initializePagination($scope, $rootScope, FeatureService);
@@ -29,12 +30,6 @@
             urlPath = urlPath.replace(':featureId', featureId);
             $location.path(urlPath);
         };
-
-	//     $scope.findCategory = function () {
-	//         FeatureCategoryService.featureCategory.query(function (categories) {
-	//             $scope.categories = categories;
-	//         });
-	//     };
 
 	    $scope.create = function (isValid) {
 	        if (isValid) {
@@ -75,7 +70,9 @@
 	            feature.updated.push(new Date().getTime());
 	            feature.$update({featureId: $stateParams.featureId}, function () {
 	                $location.path(ROLE.PATH.LIST_FEATURE);
-	            });
+	            }, function (error) {
+                    $scope.error = error;
+                });
 	        } else {
 	            $scope.submitted = true;
 	        }
@@ -96,6 +93,16 @@
 	    $scope.cancel = function () {
 	        $location.path(ROLE.PATH.LIST_FEATURE);
 	    };
+
+	    $scope.featureCategory = function(){
+	    	if ($scope.isFeatureCategory === true){
+	    		$scope.isFeatureCategory = false;
+	    	} else
+	    	if ($scope.isFeatureCategory === false){
+	    		$scope.isFeatureCategory = true;
+	    	}
+
+	    }
 
 	    $scope.featureImage = function(image){
 	    	if (angular.isArray(image)) {

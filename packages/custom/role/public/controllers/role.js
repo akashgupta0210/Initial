@@ -44,25 +44,26 @@
 
 
         $scope.create = function (isValid) {
-            var role = new RoleService.createRole($scope.role);
-            role.$save(function (response) {
-                $location.path(ROLE.PATH.LIST_ROLE);
-            }, function (error) {
-                $scope.error = error;
-            });
+            if (isValid){
+                var role = new RoleService.createRole($scope.role);
+                role.$save(function (response) {
+                    $location.path(ROLE.PATH.LIST_ROLE);
+                }, function (error) {
+                    $scope.error = error;
+                });
+            } else {
+                $scope.submitted = true;
+            }
         };
 
         $scope.update = function (isValid) {
             if (isValid) {
-                var role = $scope.role;
+                var role = new RoleService.role($scope.role);
                 if (!role.updated) {
                     role.updated = [];
                 }
                 role.updated.push(new Date().getTime());
-                console.log(role);
-                role.$update({
-                    roleId: $stateParams.roleId
-                }, function () {
+                role.$update({roleId: $stateParams.roleId}, function () {
                     $location.path(ROLE.PATH.LIST_ROLE);
                 }, function (error) {
                     $scope.error = error;
@@ -107,8 +108,7 @@
             FeatureService.createFeature.query(function(features){
                 $scope.features = features;
             })
-        }
-
+        };
 
         //Edited
 

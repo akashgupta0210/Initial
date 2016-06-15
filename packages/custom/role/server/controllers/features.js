@@ -45,10 +45,10 @@ module.exports = function (FeatureCtrl) {
             var feature = new FeatureModel(req.body);
             req.assert('name', 'You must enter a Name').notEmpty();
             req.assert('url', 'You must enter a URL').notEmpty();
-//             var errors = req.validationErrors();
-//             if (errors) {
-//                 return res.status(400).send(errors);
-//             }
+            var errors = req.validationErrors();
+            if (errors) {
+                return res.status(400).send(errors);
+            }
             feature.save(function (err) {
                 if (err) {
 //                     return validation.exportErrorResponse(res, err, ERRORS.ERROR_1401);

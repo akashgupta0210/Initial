@@ -37,10 +37,10 @@ var FeatureSchema = new Schema({
         unique: true
         // validate: [validateUniqueName, 'Name already exists!']
     },
-//     featureCategory: {
-//     	type: Schema.ObjectId, 
-//     	ref: 'FeatureCategory'
-//     },
+    featureCategory: {
+    	type: Schema.ObjectId, 
+    	ref: 'Feature'
+    },
     url: {
         type: String,
         trim: true,
