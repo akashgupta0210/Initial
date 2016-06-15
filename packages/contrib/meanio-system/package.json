@@ -15,7 +15,6 @@
     "npm": "3.x"
   },
   "dependencies": {
-    "meanio-circles": "^0.1.x",
     "serve-favicon": "latest"
   },
   "license": "MIT"

@@ -19,8 +19,6 @@
     "postinstall" : "bower install"
   },
   "dependencies": {
-    "meanio-users": "0.1.x",
-    "meanio-circles": "0.1.x",
     "request": "^2.36.0",
     "gridfs-stream": "latest",
     "ng-clip": "latest",
