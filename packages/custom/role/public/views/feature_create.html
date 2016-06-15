@@ -48,28 +48,20 @@
                 </div>
             </div>
             <div class="form-group">
-                <label mean-token="'create-isComponent'" class="col-md-2 pull-left">Is Component</label>
-                <div class="col-md-6">
-                    <input name="feature_isComponent" type="checkbox" data-ng-click = "enableWidth()"class="" ng-checked="feature.isComponent" data-ng-model="feature.isComponent" id="isComponent">
-                </div>
-            </div>
-            <div class="form-group">
                 <label mean-token="'create-ismenuItem'" class="col-md-2 pull-left">Is Menu Item</label>
                 <div class="col-md-6">
-                    <input name="feature_ismenuItem" type="checkbox" class="" ng-checked="feature.ismenuItem" data-ng-model="feature.ismenuItem" id="ismenuItem">
+                    <input name="feature_ismenuItem" type="checkbox" class="" ng-checked="feature.ismenuItem" ng-click="featureCategory" data-ng-model="feature.ismenuItem" id="ismenuItem">
                 </div>
             </div>
-            <!-- <div class="form-group left1"
-                 ng-class="{ 'has-error' : submitted && featureForm.featureCategory.$invalid }">
-                <label for="" mean-token="'create-featureCategory'"
-                       class="col-md-2 err-msg-qualifySkills">{{ 'roles.feature.FEATURE_CATEGORY' | translate }}</label>
+            <div class="form-group" ng-class="{ 'has-error' : submitted && featureForm.featureCategory.$invalid }" ng-show = "isFeatureCategory">
+                <label for="" mean-token="'create-featureCategory'" class="col-md-2">Category</label>
                 <div class="col-md-6">
-                    <select name="featureCategory" data-ng-model="newfeature.featureCategory" class="form-control" >
-                        <option value="" >{{ 'roles.feature.SELECT' | translate }}</option>
-                        <option data-ng-repeat="category in categories" value="{{category._id}}" >{{category.name}}</option>
+                    <select name="featureCategory" data-ng-model="feature.featureCategory" class="form-control" >
+                        <option value="">Please Select</option>
+                        <option data-ng-repeat="feature in features" value="{{features._id}}" >{{features.name}}</option>
                     </select>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <button mean-token="'create-submit'" type="submit" class="btn btn-info">Submit</button>
