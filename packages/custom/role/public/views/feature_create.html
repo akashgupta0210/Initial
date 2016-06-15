@@ -1,11 +1,11 @@
-<section data-ng-controller="FeatureController">
+<section data-ng-controller="FeatureController" data-ng-init = "findAll()">
     <!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
     <div class="col-md-12 row">
         <form name="featureForm" class="form-horizontal formAlign" data-ng-submit="create(featureForm.$valid)" novalidate>
-            <div class="form-group">
+            <div class="form-group"  ng-class="{ 'has-error' : submitted && featureForm.name.$invalid }" >
                 <label mean-token="'create-feature_name'" class="col-md-2 pull-left">Name</label>
                 <div class="col-md-6">
-                    <input name="name" type="text" class="form-control input-sm" data-ng-model="feature.name" id="name" placeholder="Name" required>
+                    <input name="name" type="text" class="form-control input-sm" data-ng-model="feature.name" placeholder="Name" required>
                     <!-- <div ng-show="error" class="col-md-10" ng-repeat="err in error.data"><span class="err-msg errorText errorRed">{{err.msg}}</span></div> -->
                     <div ng-show="submitted && featureForm.name.$invalid">
                         <span class="err-msg errorText errorRed"
@@ -13,24 +13,24 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-show = "isFeatureCategory">
                 <label mean-token="'create-feature_url'" class="col-md-2 pull-left">Url</label>
                 <div class="col-md-6">
-                    <input name="feature_url" type="text" class="form-control input-sm" data-ng-model="feature.url" id="url" pattern="/.+" placeholder="Feature Url" required>
-                    <div ng-show="submitted && featureForm.feature_url.$invalid">
+                    <input name="feature_url" type="text" class="form-control input-sm" data-ng-model="feature.url" pattern="/.+" placeholder="Feature Url">
+                    <!-- <div ng-show="submitted && featureForm.feature_url.$invalid">
                         <span class="err-msg errorText errorRed"
                         ng-show="featureForm.feature_url.$error.required">Please enter Url!</span>
                     </div>
                     <div ng-show="submitted && featureForm.feature_url.$invalid">
                         <span class="err-msg errorText errorRed"
                         ng-show="featureForm.feature_url.$error.pattern">Invalid Url!</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group"  ng-class="{ 'has-error' : submitted && featureForm.description.$invalid }" >
                 <label mean-token="'create-description'" class="col-md-2 pull-left">Description</label>
                 <div class="col-md-6">
-                    <textarea name="description"  class="form-control input-sm" data-ng-model="feature.description" id="description" placeholder="Description" cols="30" rows="5" required></textarea>
+                    <textarea name="description"  class="form-control input-sm" data-ng-model="feature.description" placeholder="Description" cols="30" rows="5" required></textarea>
                     <div ng-show="submitted && featureForm.description.$invalid">
                         <span class="err-msg errorText errorRed" ng-show="featureForm.description.$error.required">Please enter description!</span>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="col-md-6">
                     <div class="btn btn-info" ngf-select ngf-change="featureImage($files)" accept="image/png, image/jpeg">Upload</div>
                         <span data-ng-if="uploadInProgress">Upload progress: {{ uploadProgress }}</span>
-                        <img class="img-responsive" data-ng-src="{{feature.image}}" data-ng-if="feature.image">
+                        <img class="img-responsive imageUpload" data-ng-src="{{feature.image}}" data-ng-if="feature.image">
                     <!-- <div ng-show="submitted && featureForm.image.$invalid">
                         <span class="err-msg errorText errorRed" ng-show="featureForm.image.$error.required">Please upload image!</span>
                     </div> -->
@@ -50,15 +50,15 @@
             <div class="form-group">
                 <label mean-token="'create-ismenuItem'" class="col-md-2 pull-left">Is Menu Item</label>
                 <div class="col-md-6">
-                    <input name="feature_ismenuItem" type="checkbox" class="" ng-checked="feature.ismenuItem" ng-click="featureCategory" data-ng-model="feature.ismenuItem" id="ismenuItem">
+                    <input name="ismenuItem" type="checkbox" ng-checked="feature.ismenuItem" ng-click="featureCategory()" data-ng-model="feature.ismenuItem">
                 </div>
             </div>
-            <div class="form-group" ng-class="{ 'has-error' : submitted && featureForm.featureCategory.$invalid }" ng-show = "isFeatureCategory">
+            <div class="form-group" ng-show = "isFeatureCategory">
                 <label for="" mean-token="'create-featureCategory'" class="col-md-2">Category</label>
                 <div class="col-md-6">
                     <select name="featureCategory" data-ng-model="feature.featureCategory" class="form-control" >
                         <option value="">Please Select</option>
-                        <option data-ng-repeat="feature in features" value="{{features._id}}" >{{features.name}}</option>
+                        <option data-ng-repeat="category in featureCategories" value="{{category._id}}" >{{category.name}}</option>
                     </select>
                 </div>
             </div>

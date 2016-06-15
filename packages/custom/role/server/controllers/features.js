@@ -15,6 +15,7 @@ var mongoose = require('mongoose'),
     uuid = require('node-uuid'),
     multiparty = require('multiparty'),
     fs = require('fs'),
+    path = require('path'),
     mkdirp = require('mkdirp');
 
 module.exports = function (FeatureCtrl) {
@@ -44,7 +45,7 @@ module.exports = function (FeatureCtrl) {
         create: function (req, res) {
             var feature = new FeatureModel(req.body);
             req.assert('name', 'You must enter a Name').notEmpty();
-            req.assert('url', 'You must enter a URL').notEmpty();
+            req.assert('description', 'You must enter description').notEmpty();
             var errors = req.validationErrors();
             if (errors) {
                 return res.status(400).send(errors);
@@ -177,8 +178,9 @@ module.exports = function (FeatureCtrl) {
                 mkdirp('packages/contrib/meanio-system/public/assets/img/feature', function (err) {
                     if (err) console.error(err)
                 });
-                // var destPath = __dirname + '../../../../../meanStarter/assets/img/feature' + fileName;
-                var destPath = __dirname + '../../../../../contrib/meanio-system/public/assets/img/feature/' + fileName;
+                
+                var destPath = path.resolve(__dirname, '../../../../contrib/meanio-system/public/assets/img/feature');
+                destPath = destPath + '/'  + fileName;
                 var destPathResponse = '/system/assets/img/feature/' + fileName;
 
                 // Server side file type checker.

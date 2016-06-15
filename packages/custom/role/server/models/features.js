@@ -43,8 +43,7 @@ var FeatureSchema = new Schema({
     },
     url: {
         type: String,
-        trim: true,
-        required: true
+        trim: true
     },
     image: {
         type: String,

@@ -81,6 +81,14 @@
 	    $scope.findAll = function () {
             FeatureService.feature.query(function (features) {
                 $scope.features = features;
+                var featureCategories = [];
+                for (var i=0;i<features.length;i++){
+                	if (features[i].ismenuItem === true){
+                		featureCategories.push(features[i]);
+                	}
+                }
+                console.log(featureCategories);
+                $scope.featureCategories = featureCategories;
             });
         };
 
