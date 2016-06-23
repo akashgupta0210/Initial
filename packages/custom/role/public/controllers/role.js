@@ -44,16 +44,17 @@
 
 
         $scope.create = function (isValid) {
-            if (isValid){
-                var role = new RoleService.createRole($scope.role);
-                role.$save(function (response) {
-                    $location.path(ROLE.PATH.LIST_ROLE);
-                }, function (error) {
-                    $scope.error = error;
-                });
-            } else {
-                $scope.submitted = true;
-            }
+            // if (isValid){
+            //     var role = new RoleService.createRole($scope.role);
+            //     role.$save(function (response) {
+            //         $location.path(ROLE.PATH.LIST_ROLE);
+            //     }, function (error) {
+            //         $scope.error = error;
+            //     });
+            // } else {
+            //     $scope.submitted = true;
+            // }
+            console.log($scope.role)
         };
 
         $scope.update = function (isValid) {

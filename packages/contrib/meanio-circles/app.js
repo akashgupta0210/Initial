@@ -34,7 +34,7 @@ Circles.register(function(app, auth, database) {
 });
 
 function registerCircle(name, parents) {
-  var Circle = require('mongoose').model('Circle');
+  var Circle = mongoose.model('Circle');
 
   var query = { name: name };
   var set = {};

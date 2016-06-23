@@ -42,6 +42,7 @@
     "morgan": "latest",
     "npm": "^3.x",
     "q": "latest",
+    "rand-token": "^0.2.1",
     "request": "latest",
     "shelljs": "latest",
     "view-helpers": "latest"

@@ -11,7 +11,9 @@ var mongoose = require('mongoose'),
   nodemailer = require('nodemailer'),
   templates = require('../template'),
   _ = require('lodash'),
-  jwt = require('jsonwebtoken'); //https://npmjs.org/package/node-jsonwebtoken
+  jwt = require('jsonwebtoken'), //https://npmjs.org/package/node-jsonwebtoken
+  randtoken = require('rand-token'),
+  mail = require('../../../meanio-system/server/services/mailgen.js');
 
 
 
@@ -101,6 +103,9 @@ module.exports = function(MeanUser) {
 
             // Hard coded for now. Will address this with the user permissions system in v0.3.5
             user.roles = ['authenticated'];
+            var token = randtoken.generate(40);
+            user.confirmationToken = token;
+            user.confirmationExpires = Date.now() + 24 * 3600000; // 24 hour
             user.save(function(err) {
                 if (err) {
                     switch (err.code) {
@@ -153,6 +158,8 @@ module.exports = function(MeanUser) {
                       redirect: config.strategies.landingPage
                     });
                 });
+                var email = templates.verification_email(user, req, token)
+                mail.forwardMail(email,user.email)
                 res.status(200);
             });
         },
