@@ -102,6 +102,15 @@ UserSchema.virtual('password').set(function(password) {
 });
 
 /**
+ * Find User based on confirmationToken
+ */
+ UserSchema.statics.userBasedOnToken = function (token, callback) {
+    this.findOne({
+        confirmToken: token
+    }).exec(callback);
+};
+
+/**
  * Pre-save hook
  */
 UserSchema.pre('save', function(next) {

@@ -4,7 +4,7 @@ var config = require('meanio').loadConfig(),
     nodemailer = require('nodemailer'),
     mailgen = require('mailgen');
 
-var mailGenerator = new mailgen({
+var MailGenerator = new mailgen({
   	theme: 'salted',
   	product: {
         name: 'Initial Project',
@@ -28,7 +28,7 @@ function sendMail(mailOptions) {
  */
 module.exports = {
     forwardMail: function(body, sendTo) {
-        var emailBody = mailGenerator.generate(body);
+        var emailBody = MailGenerator.generate(body);
         var mailOptions = {
             to: sendTo,
             from: config.emailFrom,

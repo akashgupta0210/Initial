@@ -4,16 +4,16 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  async = require('async'),
-  config = require('meanio').loadConfig(),
-  crypto = require('crypto'),
-  nodemailer = require('nodemailer'),
-  templates = require('../template'),
-  _ = require('lodash'),
-  jwt = require('jsonwebtoken'), //https://npmjs.org/package/node-jsonwebtoken
-  randtoken = require('rand-token'),
-  mail = require('../../../meanio-system/server/services/mailgen.js');
+    User = mongoose.model('User'),
+    async = require('async'),
+    config = require('meanio').loadConfig(),
+    crypto = require('crypto'),
+    nodemailer = require('nodemailer'),
+    templates = require('../template'),
+    _ = require('lodash'),
+    jwt = require('jsonwebtoken'), //https://npmjs.org/package/node-jsonwebtoken
+    randtoken = require('rand-token'),
+    mail = require('../../../meanio-system/server/services/mailgen.js');
 
 
 
@@ -62,14 +62,12 @@ module.exports = function(MeanUser) {
          * Logout
          */
         signout: function(req, res) {
-
             MeanUser.events.publish({
                 action: 'logged_out',
                 user: {
                     name: req.user.name
                 }
             });
-
             req.logout();
             res.redirect('/');
         },
@@ -86,21 +84,17 @@ module.exports = function(MeanUser) {
          */
         create: function(req, res, next) {
             var user = new User(req.body);
-
             user.provider = 'local';
-
             // because we set our user.provider to local our models/user.js validation will always be true
             req.assert('name', 'You must enter a name').notEmpty();
             req.assert('email', 'You must enter a valid email address').isEmail();
             req.assert('password', 'Password must be between 8-20 characters long').len(8, 20);
             req.assert('username', 'Username cannot be more than 20 characters').len(1, 20);
             req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-
             var errors = req.validationErrors();
             if (errors) {
                 return res.status(400).send(errors);
             }
-
             // Hard coded for now. Will address this with the user permissions system in v0.3.5
             user.roles = ['authenticated'];
             var token = randtoken.generate(40);
@@ -134,14 +128,12 @@ module.exports = function(MeanUser) {
                     }
                     return res.status(400);
                 }
-
                 var payload = user;
                 payload.redirect = req.body.redirect;
                 var escaped = JSON.stringify(payload);
                 escaped = encodeURI(escaped);
                 req.logIn(user, function(err) {
                     if (err) { return next(err); }
-
                     MeanUser.events.publish({
                         action: 'created',
                         user: {
@@ -150,7 +142,6 @@ module.exports = function(MeanUser) {
                             email: user.email
                         }
                     });
-
                     // We are sending the payload inside the token
                     var token = jwt.sign(escaped, config.secret);
                     res.json({ 
@@ -176,7 +167,6 @@ module.exports = function(MeanUser) {
          */
         me: function(req, res) {
             if (!req.user) return res.send(null);
-
             if(!req.refreshJWT) {
                 return res.json(req.user);
             } else {
@@ -208,9 +198,7 @@ module.exports = function(MeanUser) {
             if (!req.isAuthenticated()) {
                 return next();
             }
-
             req.refreshJWT = false;
-
             User.findOne({
                 _id: req.user._id
             }, function(err, user) {
@@ -264,14 +252,12 @@ module.exports = function(MeanUser) {
                 user.resetPasswordToken = undefined;
                 user.resetPasswordExpires = undefined;
                 user.save(function(err) {
-
                     MeanUser.events.publish({
                         action: 'reset_password',
                         user: {
                             name: user.name
                         }
                     });
-
                     req.logIn(user, function(err) {
                         if (err) return next(err);
                         return res.send({
@@ -324,7 +310,6 @@ module.exports = function(MeanUser) {
                 }
             ],
             function(err, user) {
-
                 var response = {
                     message: 'Mail successfully sent',
                     status: 'success'
@@ -332,7 +317,6 @@ module.exports = function(MeanUser) {
                 if (err) {
                     response.message = 'User does not exist';
                     response.status = 'danger';
-
                 }
                 MeanUser.events.publish({
                     action: 'forgot_password',
@@ -342,7 +326,37 @@ module.exports = function(MeanUser) {
                 });
                 res.json(response);
             });
-        }
+        },
+
+        /**
+         * User Confirmation based on token
+         */
+         confirmUser: function(req, res, next) {
+            User.loadUserByToken(req.params.token, function(err, user) {
+                if (err) {
+                    res.redirect('/auth/login?confirmation=1');
+                }
+                if (!user) {
+                    res.redirect('/auth/login?confirmation=3');
+                } else {
+                    if (Date.now() > user.confirmationExpires) {
+                        res.redirect('/auth/login?confirmation=2');
+                    } else {
+                        user.confirmationToken = undefined;
+                        user.confirmationExpires = undefined;
+                        user.confirmed = true;
+                        user.confirmedAt = Date.now();
+                        user.save(function(err) {
+                            if (err) {
+                                res.redirect('/auth/login?confirmation=1');
+                            } else {
+                                res.redirect('/auth/login?confirmation=0');
+                            }
+                        });
+                    }
+                }
+            });
+        },
+
     };
 }
-
