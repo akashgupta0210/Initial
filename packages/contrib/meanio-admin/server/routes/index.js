@@ -4,7 +4,7 @@ var Grid = require('gridfs-stream');
 // The Package is passed automatically as first parameter
 module.exports = function(Admin, app, auth, database, circles) {
     var gfs = new Grid(database.connection.connections[0].db, database.connection.mongo);
-    var mean = require('meanio');
+    // var mean = require('meanio');
     var requiresAdmin = circles.controller.hasCircle('admin');
 
     //Setting up the users api

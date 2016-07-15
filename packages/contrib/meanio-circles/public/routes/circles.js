@@ -20,6 +20,14 @@ angular.module('mean.circles').config(['$stateProvider',
   .run(['$rootScope', '$state', '$http', 'MeanUser', function($rootScope, $state, $http, MeanUser) {
       $rootScope.$on('$stateChangeStart', function(e, toState) {
         var acl = MeanUser.acl;
+
+        function checkCircle(acl, requiredCircle) {
+          if(acl.allowed.indexOf(requiredCircle) === -1) {
+            e.preventDefault();
+            $state.go(toState.requiredCircles.denyState || 'home');
+          }
+        }
+
         // If the route has a circle requirement on it validate it
         if(toState.requiredCircles && angular.isArray(toState.requiredCircles.circles)) {
           for(var j = 0; j < toState.requiredCircles.circles.length; j++) {
@@ -28,19 +36,11 @@ angular.module('mean.circles').config(['$stateProvider',
             if (acl.allowed) {
               checkCircle(acl, requiredCircle);
             } else {
+              function aclCallBack(response) {
+                checkCircle(response, requiredCircle);
+              }
               $http.get('/api/circles/mine').success(aclCallBack);
             }
-          }
-        }
-
-        function aclCallBack(response) {
-          checkCircle(response, requiredCircle);
-        }
-
-        function checkCircle(acl, requiredCircle) {
-          if(acl.allowed.indexOf(requiredCircle) === -1) {
-            e.preventDefault();
-            $state.go(toState.requiredCircles.denyState || 'home');
           }
         }
       });

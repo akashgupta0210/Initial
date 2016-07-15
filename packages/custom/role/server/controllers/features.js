@@ -3,12 +3,6 @@
 /**
  * Module dependencies.
  */
-// var utility = require('../../../../core/system/server/controllers/util.js');
-// var validation = require('../../../../core/system/server/controllers/validationUtil.js');
-// var MESSAGE = require('../../../../core/system/server/controllers/message.js');
-// var ERRORS = MESSAGE.ERRORS;
-// var SUCCESS = MESSAGE.SUCCESS;
-
 var mongoose = require('mongoose'),
     FeatureModel = mongoose.model('Feature'),
     _ = require('lodash'),
@@ -52,7 +46,6 @@ module.exports = function (FeatureCtrl) {
             }
             feature.save(function (err) {
                 if (err) {
-//                     return validation.exportErrorResponse(res, err, ERRORS.ERROR_1401);
 					switch (err.code) {
                         case 11000:
                         case 11001:
@@ -85,16 +78,9 @@ module.exports = function (FeatureCtrl) {
             var feature = req.feature;
             req.assert('name', 'You must enter a Name').notEmpty();
             req.assert('url', 'You must enter a URL').notEmpty();
-            // if(!req.body.featureCategory){
-            //     feature.featureCategory=undefined;
-            //     delete feature.featureCategory;
-            // }
             feature = _.extend(feature, req.body);
             feature.save(function (err) {
                 if (err) {
-//                     return res.status(500).json({
-//                         error: 'Cannot update the feature'
-//                     });
 					switch (err.code) {
                         case 11000:
                         case 11001:
@@ -134,9 +120,6 @@ module.exports = function (FeatureCtrl) {
                         error: 'Cannot delete the feature'
                     });
                 }
-//                 FeatureCtrl.events.publish('remove', {
-//                     //  description: req.user.name + ' deleted ' + userPage.title + ' userPage.'
-//                 });
                 res.json(feature);
             });
         },
@@ -162,9 +145,9 @@ module.exports = function (FeatureCtrl) {
             });
         },
 
-        /**Image Upload
-          *
-          */
+        /**
+         * Image Upload
+         */
         postImage: function(req, res) {
             var form = new multiparty.Form();
             form.parse(req, function(err, fields, files) {

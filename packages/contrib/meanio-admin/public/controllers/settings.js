@@ -37,7 +37,8 @@ angular.module('mean.admin').controller('SettingsController', ['$scope', 'Global
                 var cur = resultholder,
                     prop = '',
                     m;
-                while (m = regex.exec(p)) {
+                    //Condition instead of assignment
+                while (m === regex.exec(p)) {
                     cur = cur[prop] || (cur[prop] = (m[2] ? [] : {}));
                     prop = m[2] || m[1];
                 }

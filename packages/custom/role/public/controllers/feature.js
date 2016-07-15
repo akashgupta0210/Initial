@@ -9,13 +9,7 @@
 	        feature: 'Features'
 	    };
 	    $scope.isFeatureCategory = true;
-	//     initializePermission($scope, $rootScope, $location, flash, $scope.package.featureName, URLFactory.MESSAGES);
-	//     initializeBreadCrum($scope, $scope.package.modelName, URLFactory.ROLE.PATH.LIST_FEATURE);
-	//     initializePagination($scope, $rootScope, FeatureService);
-	//     pageTitleMessage($scope,URLFactory.translate,'roles.feature.WELCOME','roles.feature.TITLE_DESC');
-	//     initializeDeletePopup($scope, $scope.package.modelName, URLFactory.MESSAGES, URLFactory.uibModal);
-
-	    $scope.newFeature = function () {
+		$scope.newFeature = function () {
 	        $location.path(ROLE.PATH.CREATE_FEATURE);
 	    };
 

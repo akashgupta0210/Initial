@@ -211,7 +211,7 @@ module.exports = function(MeanUser) {
                     delete req.user;
                 } else {
                     var dbUser = user.toJSON();
-                    var id = req.user._id;
+                    // var id = req.user._id;
 
                     delete dbUser._id;
                     delete req.user._id;

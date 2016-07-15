@@ -1,3 +1,4 @@
+'use strict';
 angular.module('mean.admin').directive('ngEnter', function() {
     return function(scope, elm, attrs) {
         elm.bind('keypress', function(e) {
@@ -18,14 +19,15 @@ angular.module('mean.admin').directive('ngEditable', function() {
         replace: true,
         link: function(scope, element, attrs) {
             scope.focus = function() {
-                element.find("input").focus();
+                element.find('input').focus();
             };
             scope.$watch('edit', function(isEditable) {
                 if (isEditable === false) {
                     scope.update();
-                } else {
-                    // scope.focus();
                 }
+                 // else {
+                    // scope.focus();
+                // }
             });
         }
     };
@@ -43,7 +45,7 @@ angular.module('mean.admin').directive('ngEditableParagraph', function() {
         replace: true,
         link: function(scope, element, attrs) {
             scope.focus = function() {
-                element.find("input").focus();
+                element.find('input').focus();
             };
             scope.$watch('edit', function(isEditable) {
                 if (isEditable === false) {

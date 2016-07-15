@@ -1,3 +1,4 @@
+'use strict';
 describe('StarterController', function() {
     var controller, scope;
     beforeEach(module('mean.meanStarter'));

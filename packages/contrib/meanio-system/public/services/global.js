@@ -2,9 +2,9 @@
 angular.module('mean.system')
   .factory('Global', ['$q', '$http', '$timeout',
   function($q, $http, $timeout) {
-    var _identity = undefined,
+    var _identity,
       _authenticated = false,
-      _globals = undefined;
+      _globals;
 
     function makeGlobals(userObj) {
       var globals = { authenticated: 0, isAdmin: false, user: {}};
@@ -65,7 +65,7 @@ angular.module('mean.system')
       },
       authenticate: function(identity) {
         _identity = identity;
-        _authenticated = identity != null;
+        _authenticated = identity !== null;
         _globals = makeGlobals(identity);
 
         // we'll store the identity in localStorage for future

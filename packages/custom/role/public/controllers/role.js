@@ -9,24 +9,6 @@
             name: 'role',
             feature: 'Roles'
         };
-
-        $scope.checkCircle = function() {
-            RoleService.checkCircle($stateParams.circle).then(function(response) {
-                $scope.res = response;
-                $scope.resStatus = 'info';
-            }, function(error) {
-                $scope.res = error;
-                $scope.resStatus = 'danger';
-            });
-        };
-
-        //Edited
-
-        //     initializePermission($scope, $rootScope, $location, flash, $scope.package.featureName, URLFactory.MESSAGES);
-        //     initializeBreadCrum($scope, $scope.package.modelName, URLFactory.ROLE.PATH.LIST_ROLE);
-        //     pageTitleMessage($scope,URLFactory.translate,'roles.role.WELCOME','roles.role.TITLE_DESC');
-        //     initializePagination($scope, $rootScope, RoleService);
-        //     initializeDeletePopup($scope, $scope.package.modelName, URLFactory.MESSAGES, URLFactory.uibModal);
         
         $scope.newRole = function () {
             $location.path(ROLE.PATH.CREATE_ROLE);
@@ -42,9 +24,28 @@
             $location.path(ROLE.PATH.LIST_ROLE);
         };
 
+        $scope.assignFeature = function(feature,indexValue) {
+            if (angular.isUndefined($scope.role)) {
+                $scope.role = {}
+            }
+            if (angular.isUndefined($scope.role.permission)) {
+                $scope.role.permission = [];
+            }
+            // if (angular.isUndefined($scope.role.permission[indexValue])) {
+            //     $scope.role.permission[indexValue] = {}
+            // }
+            if (angular.isUndefined($scope.role.permission[indexValue].featureName)) {
+                $scope.role.permission[indexValue].featureName = feature._id
+            } else {
+                delete $scope.role.permission[indexValue]
+            }
+            $scope.role.permission.length = $scope.role.permission.length
+            console.log($scope.role.permission)
+        }
 
         $scope.create = function (isValid) {
             if (isValid){
+                console.log($scope.role)
                 var role = new RoleService.createRole($scope.role);
                 role.$save(function (response) {
                     $location.path(ROLE.PATH.LIST_ROLE);
@@ -105,14 +106,15 @@
         };
 
         $scope.listAllFeature = function(){
+            var featureArray = [];
             FeatureService.createFeature.query(function(features){
-                $scope.features = features;
+                for (var i=0;i<features.length;i++) {
+                    if (features[i].ismenuItem == false) {
+                        featureArray.push(features[i]);
+                    }
+                }
+                $scope.features = featureArray
             })
         };
-
-        //Edited
-
     }
-
-
 })();

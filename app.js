@@ -15,6 +15,7 @@ import 'angular-ui-router';
 import 'angular-jwt';
 import 'angular-bootstrap/ui-bootstrap-tpls';
 import 'ng-file-upload';
+import 'angucomplete-alt';
 
 window.$ = jQuery;
 
@@ -28,7 +29,7 @@ angular.element(document).ready(function () {
 });
 
 function processModules(modules) {
-    var packageModules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'ui.select', 'ngSanitize','ngFileUpload'], m, mn;
+    var packageModules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'ui.select', 'ngSanitize','ngFileUpload','angucomplete-alt'], m, mn;
     for (var index in modules) {
         m = modules[index];
         mn = 'mean.' + m.name;

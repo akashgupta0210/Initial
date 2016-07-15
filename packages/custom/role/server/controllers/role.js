@@ -3,19 +3,8 @@
 /**
  * Module dependencies.
  */
-// var validation = require('../../../../core/system/server/controllers/validationUtil.js');
-// var MESSAGE = require('../../../../core/system/server/controllers/message.js');
-// var ERRORS = MESSAGE.ERRORS;
-// var SUCCESS = MESSAGE.SUCCESS;
-// var utility = require('../../../../core/system/server/controllers/util.js');
-
-var async = require('async');
 var mongoose = require('mongoose'),
-
-    // UserModel = mongoose.model('User'),
     RoleModel = mongoose.model('Role'),
-    // FeatureroleModel = mongoose.model('Featurerole'),
-
     _ = require('lodash');
 
 module.exports = function (RoleCtrl) {
@@ -40,8 +29,6 @@ module.exports = function (RoleCtrl) {
 
 
         create: function (req, res) {
-            // var features = req.body.features;
-            // delete req.body.features;
             var role = new RoleModel(req.body);
             req.assert('name', 'Please enter  Name').notEmpty();
             req.assert('description', 'You must enter description').notEmpty();
@@ -49,14 +36,8 @@ module.exports = function (RoleCtrl) {
             if (errors) {
                 return res.status(400).send(errors);
             }
-            // var roleFeatures=[];
-            // for(var i=0;i<features.length;i++ ){
-                // roleFeatures.push(features[i].feature);
-            // }
-            // role.features=roleFeatures;
             role.save(function (err) {
                 if (err) {
-                    // return validation.exportErrorResponse(res, err, ERRORS.ERROR_1401);
                     switch (err.code) {
                         case 11000:
                         case 11001:
@@ -80,24 +61,6 @@ module.exports = function (RoleCtrl) {
                     }
                     return res.status(400);
                 }
-                
-                // async.each(features, function (feature, callback) {
-
-                    // var featureRoleData = {
-                        // role: role._id,
-                        // feature: feature.feature,
-                        // isWrite: feature.isWrite,
-                        // isDelete: feature.isDelete,
-                        // isRead: feature.isRead,
-                        // isUpdate: feature.isUpdate
-                    // };
-                    // var featureRole = new FeatureroleModel(featureRoleData);
-                    // featureRole.save(function (err) {
-                        // if (err) {
-                            // console.log("Inside feature role save:Error " + err);
-                        // }
-                    // });
-                // });
                 res.json(role);
             });
         },
@@ -106,26 +69,12 @@ module.exports = function (RoleCtrl) {
         /** Update the Role
          */
         update: function (req, res) {
-        //     var features = req.body.features;
-        //     delete req.body.features;
             var role = req.role;
             role = _.extend(role, req.body);
             req.assert('name', 'Please enter  Name').notEmpty();
             req.assert('description', 'You must enter description').notEmpty();
-        //     var role = _.extend(role, req.body);
-        //     req.assert('description', 'You must enter role description').notEmpty();
-        //     var errors = req.validationErrors();
-        //     if (errors) {
-        //         return res.status(400).send(errors);
-        //     }
-        //     var roleFeatures=[];
-        //     for(var i=0;i<features.length;i++ ){
-        //         roleFeatures.push(features[i].feature);
-        //     }
-        //     role.features=roleFeatures;
             role.save(function (err) {
                 if (err) {
-        //             return validation.exportErrorResponse(res, err, ERRORS.ERROR_1401);
                     switch (err.code) {
                         case 11000:
                         case 11001:
@@ -149,26 +98,8 @@ module.exports = function (RoleCtrl) {
                     }
                     return res.status(400);
                 }
-        //         FeatureroleModel.remove({role: role._id}, function () {
-        //             async.each(features, function (feature, callback) {
-        //                 var featureRoleData = {
-        //                     role: role._id,
-        //                     feature: feature.feature,
-        //                     isWrite: feature.isWrite,
-        //                     isDelete: feature.isDelete,
-        //                     isRead: feature.isRead,
-        //                     isUpdate: feature.isUpdate
-        //                 };
-        //                 var featureRole = new FeatureroleModel(featureRoleData);
-        //                 featureRole.save(function (err) {
-        //                     if (err) {
-        //                         console.log("Inside feature role save:Error " + err);
-        //                     }
-        //                 });
-        //             });
                 res.json(role);
-                });
-        //     });
+            });
         },
 
 
@@ -183,29 +114,20 @@ module.exports = function (RoleCtrl) {
                         error: 'Cannot delete the role'
                     });
                 }
-
-        //         RoleCtrl.events.publish('remove', {
-        //             //  description: req.user.name + ' deleted ' + userPage.title + ' userPage.'
-        //         });
                 res.json(role);
             });
         },
 
-        // /**
-        //  * Show the Role
-        //  */
-        show: function (req, res) {
-
-        //       role.events.publish('view', {
-        //      description: req.user.name + ' read ' + req.role.title + ' role.'
-        //      });
-             
+        /**
+         * Show the Role
+         */
+        show: function (req, res) {     
             res.json(req.role);
         },
 
-        // /**
-        //  * List of Roles
-        //  */
+        /**
+         * List of Roles
+         */
         all: function (req, res) {
 
             RoleModel.find().exec(function (err, roles) {

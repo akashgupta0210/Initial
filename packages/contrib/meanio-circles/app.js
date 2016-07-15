@@ -14,27 +14,8 @@ var Circles = new Module('circles');
  * Dependency injection is used to define required modules
  */
 
-Circles.register(function(app, auth, database) {
-
-  Circles.controller = require('./server/controllers/circles')(Circles, app);
-  Circles.registerCircle = registerCircle;
-  Circles.routes(app, auth, database);
-  Circles.angularDependencies(['mean.users']);
-
-  Circles.menus.add({
-    title: 'Circles',
-    link: 'manage circles',
-    roles: ['authenticated', 'admin'],
-    menu: 'main'
-  });
-
-  Circles.models = {};
-
-  return Circles;
-});
-
 function registerCircle(name, parents) {
-  var Circle = require('mongoose').model('Circle');
+  var Circle = mongoose.model('Circle');
 
   var query = { name: name };
   var set = {};
@@ -56,6 +37,26 @@ function registerCircle(name, parents) {
     }
   });
 }
+
+
+Circles.register(function(app, auth, database) {
+
+  Circles.controller = require('./server/controllers/circles')(Circles, app);
+  Circles.registerCircle = registerCircle;
+  Circles.routes(app, auth, database);
+  Circles.angularDependencies(['mean.users']);
+
+  Circles.menus.add({
+    title: 'Circles',
+    link: 'manage circles',
+    roles: ['authenticated', 'admin'],
+    menu: 'main'
+  });
+
+  Circles.models = {};
+
+  return Circles;
+});
 
 /*
 Y Override queries to check user permisisons

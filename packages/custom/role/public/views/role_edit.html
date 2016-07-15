@@ -1,10 +1,8 @@
-<section data-ng-controller="RoleController" data-ng-init="findOne();">
-    <!-- <div ng-include="'/system/views/breadcrum.html'"></div> -->
+<section data-ng-controller="RoleController" data-ng-init="findOne();listAllFeature();">
     <div class="col-md-12 row">
         <h3 class="pull-left ">Role</h3>
     </div>
     <div class="col-md-12 row">
-        <!-- <div ng-show="error" class="red col-md-9 col-md-offset-2" ng-repeat="err in error.data">{{err.msg}}</div> -->
         <div class="col-md-12 row">
             <form name="roleForm" class="form-horizontal formAlign" data-ng-submit="update(roleForm.$valid)" novalidate>
                 <div class="form-group">
@@ -27,76 +25,39 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'roles.role.FEATURES' | translate }}</label>
+
+                <div class="form-group">
+                    <label mean-token="'edit-feature'" class="col-md-2 pull-left ">Features</label>
                     <div class="col-md-10">
-                        <div role="navigation">
-                            <ul>
-                                <div data-ng-repeat="roleFeature in roleFeatures" ng-if="!roleFeature.feature.isComponent" class="">
-                                    <div class="checkbox">
-                                        <div class="col-md-6">
-                                            <input data-ng-click="addFeature(roleFeature)" id="feature{{roleFeature.feature._id}}" ng-model="roleFeature.selected" type="checkbox" name="check" value="true">
-                                            <label for="feature{{roleFeature.feature._id}}">{{roleFeature.feature.name}}</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isRead" type="checkbox" name="check" value="true" id="isRead{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isRead{{roleFeature.feature._id}}">{{ 'roles.role.READ' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isWrite" type="checkbox" name="check" value="true" id="isWrite{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isWrite{{roleFeature.feature._id}}">{{ 'roles.role.WRITE' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isUpdate" type="checkbox" name="check" value="true" id="isUpdate{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isUpdate{{roleFeature.feature._id}}">{{ 'roles.role.UPDATE' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isDelete" type="checkbox" name="check" value="true" id="isDelete{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isDelete{{roleFeature.feature._id}}">{{ 'roles.role.DELETE' | translate }}</label>
-                                            </label>
-                                        </div>
-                                    </div>
+                        <div ng-repeat = "feature in features">
+                            <div ng-if ="feature.ismenuItem == false">
+                                <div class="col-md-6">
+                                    <input ng-model="role.permission[$index].featureName" type="checkbox" name="featureName" data-ng-click="assignFeature(feature,$index);" value="feature._id">
+                                    <label for="role.permission[$index].featureName">{{feature.name}}</label>
                                 </div>
-                            </ul>
+                                <div class="col-md-6">
+                                    <label class="checkbox-inline">
+                                        <input data-ng-model="role.permission[$index].read" type="checkbox" name="read" value="true" ng-disabled="!role.permission[$index].featureName">
+                                        <label for="role.feature[$index].read">Read</label>
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input data-ng-model="role.permission[$index].write" type="checkbox" name="write" value="true" ng-disabled="!role.permission[$index].featureName">
+                                        <label for="role.feature[$index].write">Write</label>
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input data-ng-model="role.permission[$index].update" type="checkbox" name="update" value="true" ng-disabled="!role.permission[$index].featureName">
+                                        <label for="role.feature[$index].update">Edit</label>
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input data-ng-model="role.permission[$index].delete" type="checkbox" name="delete" value="true" ng-disabled="!role.permission[$index].featureName">
+                                        <label for="role.features[$index].delete">Delete</label>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'roles.role.COMPONENTS' | translate }}</label>
-                    <div class="col-md-10">
-                        <div role="navigation">
-                            <ul>
-                                <div data-ng-repeat="roleFeature in roleFeatures" ng-if="roleFeature.feature.isComponent" class="">
-                                    <div class="checkbox">
-                                        <div class="col-md-6">
-                                            <input data-ng-click="addFeature(roleFeature)" id="component{{roleFeature.feature._id}}" ng-model="roleFeature.selected" type="checkbox" name="check" value="true">
-                                            <label for="feature{{roleFeature.feature._id}}">{{roleFeature.feature.name}}</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isRead" type="checkbox" name="check" value="true" id="isRead{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isRead{{roleFeature.feature._id}}">{{ 'roles.role.READ' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isWrite" type="checkbox" name="check" value="true" id="isWrite{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isWrite{{roleFeature.feature._id}}">{{ 'roles.role.WRITE' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isUpdate" type="checkbox" name="check" value="true" id="isUpdate{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isUpdate{{roleFeature.feature._id}}">{{ 'roles.role.UPDATE' | translate }}</label>
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input data-ng-model="roleFeature.isDelete" type="checkbox" name="check" value="true" id="isDelete{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
-                                                <label for="isDelete{{roleFeature.feature._id}}">{{ 'roles.role.DELETE' | translate }}</label>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button mean-token="'edit-submit'" type="submit" class="btn btn-info">Submit</button>

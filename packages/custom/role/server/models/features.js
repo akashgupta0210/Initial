@@ -1,41 +1,41 @@
 'use strict';
 
-// /**
-//  * Module dependencies.
-//  */
+/**
+ * Module dependencies.
+ */
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-// var validateUniqueName = function (value, callback) {
-//     var Feature = mongoose.model('Feature');
-//     Feature.find({
-//         $and: [
-//             {
-//                 name: { $regex: new RegExp(value, "i") }
+var validateUniqueName = function (value, callback) {
+    var Feature = mongoose.model('Feature');
+    Feature.find({
+        $and: [
+            {
+                name: { $regex: new RegExp(value, "i") }
 
-//             },
-//             {
-//                 _id: {
-//                     $ne: this._id
-//                 }
-//             }
-//         ]
-//     }, function (err, feature) {
-//         callback(err || feature.length === 0);
-//     });
-// };
+            },
+            {
+                _id: {
+                    $ne: this._id
+                }
+            }
+        ]
+    }, function (err, feature) {
+        callback(err || feature.length === 0);
+    });
+};
 
-// /**
-//  * ConfigType Schema.
-//  */
+/**
+ * ConfigType Schema.
+ */
 var FeatureSchema = new Schema({
     name: {
         type: String,
         trim: true,
         required: true,
-        unique: true
-        // validate: [validateUniqueName, 'Name already exists!']
+        unique: true,
+        validate: [validateUniqueName, 'Name already exists!']
     },
     featureCategory: {
     	type: Schema.ObjectId, 
@@ -63,11 +63,7 @@ var FeatureSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    isComponent: {
-        type: Boolean,
-        default: false
-    },
-     ismenuItem: {
+    ismenuItem: {
         type: Boolean,
         default: false
     }

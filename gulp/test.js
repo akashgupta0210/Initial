@@ -2,10 +2,10 @@
 
 var gulp = require('gulp'),
   gulpLoadPlugins = require('gulp-load-plugins'),
-  request = require('request'),
-  KarmaServer = require('karma').Server,
-  fs = require('fs'),
-  path = require('path');
+  // request = require('request'),
+  KarmaServer = require('karma').Server;
+  // fs = require('fs'),
+  // path = require('path');
 
 var plugins = gulpLoadPlugins();
 
